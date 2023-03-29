@@ -1,0 +1,76 @@
+create resource group - New-AzResourceGroup -Name resourceGroup -Location 'CentralIndia'
+New-AzVm `
+    -ResourceGroupName 'resourceGroup' `
+    -Name 'myVM' `
+    -Location 'CentralIndia' `
+    -VirtualNetworkName 'myVnet2' `
+    -SubnetName 'Default' `
+    -SecurityGroupName 'myNetworkSecurityGroup' `
+    -PublicIpAddressName 'myPublicIpAddress' `
+    -OpenPorts 80,3389
+
+Get-AzLocation | Select-Object -Property Location
+$Location = 'centralindia'
+$Storage = @{
+ResourceGroupName = $ResourceGroup
+StorageAccountName = 'mystorageaccount1'
+SkuName = 'Standard_LRS'
+Location = 'centralindia'
+}
+$StoragAccount = New-AzStorageAccount @Storage
+$Context = $StorageAccount.Context
+
+azcopy login
+azcopy copy 'D:\Images\IMG-20180210-WA0023 (3)' "https://csg1003200280cc2771.blob.core.windows.net/container-example/virtual-folder/IMG-20180210-WA0023 (3).jpg"
+
+azure monitor
+disaster recovery- taking backupon multiple 
+
+# Configure the Azure provider
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "2.46.0"
+    }
+  }
+}
+
+provider "azurerm" {
+  features {}
+}
+
+resource "azurerm_resource_group" "rg" {
+  name     = "TFResourceGroup"
+  location = "eastus"
+}
+AZ login
+az account set --subscription "4988b47b-d106-4d58-9ad1-30443a06ce1a"-----add your subscription id
+az ad sp create-for-rbac --role="Contributor" --scopes="/subscriptions/4988b47b-d106-4d58-9ad1-30443a06ce1a"----create service principle(A Service Principal is an application 
+within Azure Active Directory with the authentication tokens Terraform needs to perform actions on your behalf)
+New-Item -Path "c:\" -Name "learn-terraform-azure11" -ItemType "directory"---execute in powershell
+# Configure the Azure provider
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "~> 2.46.0"
+    }
+  }
+
+  required_version = ">= 1.1.0"
+}
+
+provider "azurerm" {
+  features {}
+}
+
+resource "azurerm_resource_group" "rg" {
+  name     = "myTFResourceGroup"
+  location = "centralindia"
+}
+$Env:ARM_CLIENT_ID = "f3dda49e-b624-43cd-be4d-5fb4e808634f"
+$Env:ARM_CLIENT_SECRET = "6IE8Q~q4Ekba17uckFoo0VLDq0KSfrPRdjVqzaeS"
+$Env:ARM_SUBSCRIPTION_ID = "4988b47b-d106-4d58-9ad1-30443a06ce1a"
+$Env:ARM_TENANT_ID = "812a04fd-f287-4d5b-9f37-a5d374e7f212"
+
